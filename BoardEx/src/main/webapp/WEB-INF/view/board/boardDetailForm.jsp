@@ -53,6 +53,8 @@
 			</tbody>
 		</table>
 		<div class="pull-right">
+			<a href="updateDocument.do?bNum=${dto.bNum}"><button type="button"
+					class="btn btn-default">수정</button></a>
 			<a href="deleteDocument.do?bNum=${dto.bNum}"><button type="button"
 					class="btn btn-default">삭제</button></a>
 			<a href="boardList.do"><button

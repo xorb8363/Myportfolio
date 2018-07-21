@@ -11,4 +11,5 @@ public interface BoardService {
 	public BoardDto boardDetailForm(int bNum);
 	public void increaseViewCount(int bNum);
 	public void deleteDocument(int bNum);
+	public void updateEndDocument(BoardDto bdto);
 }

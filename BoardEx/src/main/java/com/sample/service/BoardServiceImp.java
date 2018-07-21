@@ -46,4 +46,10 @@ public class BoardServiceImp implements BoardService {
 		boardDao.deleteDocument(bNum);
 	}
 
+	@Override
+	public void updateEndDocument(BoardDto bdto) {
+		// TODO Auto-generated method stub
+		boardDao.updateEndDocument(bdto);
+	}
+
 }

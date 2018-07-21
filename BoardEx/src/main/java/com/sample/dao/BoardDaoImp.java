@@ -44,4 +44,10 @@ public class BoardDaoImp implements BoardDao {
 		// TODO Auto-generated method stub
 		sqlSession.delete("board.deleteDocument", bNum);
 	}
+
+	@Override
+	public void updateEndDocument(BoardDto bdto) {
+		// TODO Auto-generated method stub
+		sqlSession.update("board.updateEndDocument", bdto);
+	}
 }

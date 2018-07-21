@@ -43,4 +43,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE b_num = #{bNum}
 	</delete>
 	
+	<update id="updateEndDocument"  parameterType="com.sample.dto.BoardDto">
+		UPDATE board SET
+			b_writer = #{bWriter},
+			b_title = #{bTitle},
+			b_contents = #{bContents}
+		WHERE b_num = #{bNum}
+	</update>
+	
 </mapper>

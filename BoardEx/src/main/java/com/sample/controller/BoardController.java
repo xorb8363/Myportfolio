@@ -61,4 +61,20 @@ public class BoardController {
 		
 		return "redirect:/boardList.do";
 	}
+	
+	@RequestMapping(value="updateDocument.do", method=RequestMethod.GET)
+	public ModelAndView updateDocument(@RequestParam int bNum) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("board/boardUpdateForm");
+		mav.addObject("dto", boardService.boardDetailForm(bNum));
+		return mav;
+	}
+	
+	@RequestMapping(value="updateEndDocument.do", method=RequestMethod.POST)
+	public String updateEndDocument(BoardDto bdto) {
+		boardService.updateEndDocument(bdto);
+		
+		return "redirect:/boardList.do";
+	}
 }
