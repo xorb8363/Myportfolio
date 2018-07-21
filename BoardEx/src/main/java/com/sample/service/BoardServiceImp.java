@@ -33,4 +33,17 @@ public class BoardServiceImp implements BoardService {
 		return boardDao.boardDetailView(bNum);
 	}
 
+	@Override
+	public void increaseViewCount(int bNum) {
+		// TODO Auto-generated method stub
+		boardDao.increaseViewCount(bNum);
+		
+	}
+
+	@Override
+	public void deleteDocument(int bNum) {
+		// TODO Auto-generated method stub
+		boardDao.deleteDocument(bNum);
+	}
+
 }

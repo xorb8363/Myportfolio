@@ -40,7 +40,7 @@
 						<td><a href="boardDetailForm.do?bNum=${row.bNum}">${row.bTitle}</a></td>
 						<td>${row.bWriter}</td>
 						<td><fmt:formatDate value="${row.bRegDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<td>0</td>
+						<td>${row.bReadCount}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

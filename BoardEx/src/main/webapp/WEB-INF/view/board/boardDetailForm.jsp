@@ -22,17 +22,6 @@
 		<div class="page-header">
 			<h1>게시판</h1>
 		</div>
-		<!-- 
-		게시글 번호 : ${dto.bNum} <br>
-		제목 : ${dto.bTitle} <br>
-		작성자 : ${dto.bWriter} <br>
-		작성일자: <fmt:formatDate value="${dto.bRegDate}" pattern="yyyy-MM-dd HH:mm:ss"/> <br>
-		내용 : ${dto.bContents} <br>
-		
-		
-		<a href="boardList.do"><button type="button"
-							class="btn btn-default">확인</button></a>
-							-->
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -50,7 +39,7 @@
 					<td>${dto.bWriter}</td>
 					<td><fmt:formatDate value="${dto.bRegDate}"
 							pattern="yyyy-MM-dd HH:mm:ss" /></td>
-					<td>0</td>
+					<td>${dto.bReadCount}</td>
 				</tr>
 				<tr>
 					<td colspan="5"></td>
@@ -64,8 +53,10 @@
 			</tbody>
 		</table>
 		<div class="pull-right">
-			<a href="boardList.do"><button type="button"
-					class="btn btn-default">확인</button></a>
+			<a href="deleteDocument.do?bNum=${dto.bNum}"><button type="button"
+					class="btn btn-default">삭제</button></a>
+			<a href="boardList.do"><button
+					type="button" class="btn btn-default">뒤로</button></a>
 		</div>
 	</div>
 </body>

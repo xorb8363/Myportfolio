@@ -47,10 +47,18 @@ public class BoardController {
 	
 	@RequestMapping(value="boardDetailForm.do", method=RequestMethod.GET)
 	public ModelAndView boardDetailForm(@RequestParam int bNum) {
+		boardService.increaseViewCount(bNum);
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("board/boardDetailForm");
 		mav.addObject("dto", boardService.boardDetailForm(bNum));
 		return mav;
+	}
+	
+	@RequestMapping(value="deleteDocument.do", method=RequestMethod.GET)
+	public String deleteDocument(@RequestParam int bNum) {
+		boardService.deleteDocument(bNum);
+		
+		return "redirect:/boardList.do";
 	}
 }

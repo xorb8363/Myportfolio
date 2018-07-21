@@ -32,4 +32,16 @@ public class BoardDaoImp implements BoardDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("board.boardDetailForm", bNum);
 	}
+
+	@Override
+	public void increaseViewCount(int bNum) {
+		// TODO Auto-generated method stub
+		sqlSession.update("board.increaseViewCount", bNum);	
+	}
+
+	@Override
+	public void deleteDocument(int bNum) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("board.deleteDocument", bNum);
+	}
 }

@@ -21,9 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="b_contents" property="bContents" />
 		<result column="b_reg_date" property="bRegDate" />
 		<result column="b_image" property="bImage" />
+		<result column="b_read_count" property="bReadCount"/>
 	</resultMap>
 	<select id="boardList" resultMap="boardListMap">
-		SELECT b_num, b_writer, b_title, b_contents, b_reg_date
+		SELECT b_num, b_writer, b_title, b_contents, b_reg_date, b_read_count
 		FROM board ORDER BY b_reg_date DESC
 	</select>
 	
@@ -31,5 +32,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM board
 		WHERE b_num = #{bNum}
 	</select>
+	
+	<update id="increaseViewCount" parameterType="com.sample.dto.BoardDto">
+		UPDATE board SET b_read_count = b_read_count + 1
+		WHERE b_num = #{bNum}
+	</update>
+	
+	<delete id="deleteDocument" parameterType="com.sample.dto.BoardDto">
+		DELETE FROM board
+		WHERE b_num = #{bNum}
+	</delete>
 	
 </mapper>
