@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,6 +34,15 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:forEach var="row" items="${list}">
+					<tr>
+						<td>${row.bNum}</td>
+						<td><a href="">${row.bTitle}</a></td>
+						<td>${row.bWriter}</td>
+						<td><fmt:formatDate value="${row.bRegDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td>0</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<!-- row는 한줄을 모두 이 안에 있는 기능들만 보여주도록 하기위해 작성 -->

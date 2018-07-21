@@ -1,6 +1,9 @@
 package com.sample.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
+import com.sample.dto.BoardDto;
 
 public class BoardDaoImp implements BoardDao {
 	
@@ -10,5 +13,17 @@ public class BoardDaoImp implements BoardDao {
 	
 	public void setSqlSession(SqlSessionTemplate sqlSession) {
 		this.sqlSession = sqlSession;
+	}
+
+	@Override
+	public void boardInsertProcess(BoardDto bdto) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("board.boardInsertProcess", bdto);
+	}
+
+	@Override
+	public List<BoardDto> boardList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("board.boardList");
 	}
 }

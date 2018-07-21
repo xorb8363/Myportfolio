@@ -5,4 +5,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="board">
 
+	<insert id="boardInsertProcess" parameterType="com.sample.dto.BoardDto">
+		INSERT INTO board
+		(b_num, b_writer, b_title, b_contents, b_reg_date,
+		b_image)
+		VALUES
+		(board_b_num_seq.nextval, #{bWriter}, #{bTitle}, #{bContents},
+		sysdate, #{bImage, jdbcType=VARCHAR})
+	</insert>
+
+	<resultMap type="com.sample.dto.BoardDto" id="boardListMap">
+		<result column="b_num" property="bNum" />
+		<result column="b_writer" property="bWriter" />
+		<result column="b_title" property="bTitle" />
+		<result column="b_contents" property="bContents" />
+		<result column="b_reg_date" property="bRegDate" />
+		<result column="b_image" property="bImage" />
+	</resultMap>
+	<select id="boardList" resultMap="boardListMap">
+		SELECT b_num, b_writer, b_title, b_contents, b_reg_date
+		FROM board ORDER BY b_reg_date DESC
+	</select>
+	
 </mapper>
