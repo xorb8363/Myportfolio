@@ -1,7 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
+	<mvc:annotation-driven></mvc:annotation-driven> <!-- json 설정을 위해 -->
+	<context:annotation-config /> <!-- @Autowired 설정을 위해 -->
+
+	<!-- DataSource Bean (오라클과 연동) -->
+	<context:property-placeholder location="classpath:config/oracle.properties" />
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<!-- SqlSessionFactory Bean (mapper에서 데이터베이스에 접근하기 위한 설정) -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:mappers/boardMapper.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- SqlSessionTemplate Bean (dao에서 SqlSessionTemplate을 사용하여 mapper에 접근하기 
+		위한 설정) -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- Transaction Bean[1] (트랜잭션 설정1) -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- Transaction Bean[2] (tx를 사용한 설정. Process로 끝나는 모든 메서드에 트랜잭션 적용) -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*Process" rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- Transaction Bean[3] (*은 모든 것을 의미. 아래 패키지안의 아래 메서드에서 트랜잭션이 발생하면 위 설정을 
+		통해 예외발생처리 설정.) -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.*.service.*ServiceImp.*Process(..))"
+			id="aa" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="aa" />
+	</aop:config>
+
+	<!-- Dao Bean (BoardDaoImp에서 SqlSessionTemplate 클래스를 사용하기 위한 설정) -->
+	<bean id="boardDao" class="com.sample.dao.BoardDaoImp">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<!-- Service Bean (BoardService클래스에서 UserDao 클래스에 접근하기 위한 DI 설정) -->
+	<bean id="boardService" class="com.sample.service.BoardServiceImp">
+		<property name="boardDao" ref="boardDao" />
+	</bean>
+
+	<!-- Controller Bean (BoardController 클래스에서 BoardService 클래스에 접근하기 위한 DI 
+		설정) -->
+	<bean id="boardController" class="com.sample.controller.BoardController">
+		<property name="boardService" ref="boardService" />
+	</bean>
+
+	<!-- 첨부파일 Bean[1] -->
+	<!-- uploadDirResource는 파일 업로드 시 다중접속으로 인해 용량이 한꺼번에 몰릴것을 대비한 임시저장소 -->
+	<bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
+		<!-- <constructor-arg value="c:/temp" /> -->
+		<constructor-arg value="./src/main/webapp/files/" />
+	</bean>
+
+	<!-- 첨부파일 Bean[2] -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="uploadTempDir" ref="uploadDirResource" />
+		<property name="maxUploadSize" value="100000000" />
+	</bean>
+
+	<!-- ViewResolver Bean -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 
 </beans>
