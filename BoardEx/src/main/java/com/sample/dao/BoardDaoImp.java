@@ -26,4 +26,10 @@ public class BoardDaoImp implements BoardDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("board.boardList");
 	}
+
+	@Override
+	public BoardDto boardDetailView(int bNum) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("board.boardDetailForm", bNum);
+	}
 }

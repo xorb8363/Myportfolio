@@ -37,7 +37,7 @@
 				<c:forEach var="row" items="${list}">
 					<tr>
 						<td>${row.bNum}</td>
-						<td><a href="">${row.bTitle}</a></td>
+						<td><a href="boardDetailForm.do?bNum=${row.bNum}">${row.bTitle}</a></td>
 						<td>${row.bWriter}</td>
 						<td><fmt:formatDate value="${row.bRegDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						<td>0</td>

@@ -8,5 +8,5 @@ public interface BoardService {
 	
 	public void boardInsertProcess(BoardDto bdto);
 	public List<BoardDto> boardListProcess();
-
+	public BoardDto boardDetailForm(int bNum);
 }

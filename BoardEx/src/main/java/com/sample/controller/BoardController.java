@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sample.dto.BoardDto;
@@ -42,5 +43,14 @@ public class BoardController {
 		boardService.boardInsertProcess(bdto);
 		
 		return "redirect:/boardList.do";
+	}
+	
+	@RequestMapping(value="boardDetailForm.do", method=RequestMethod.GET)
+	public ModelAndView boardDetailForm(@RequestParam int bNum) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.setViewName("board/boardDetailForm");
+		mav.addObject("dto", boardService.boardDetailForm(bNum));
+		return mav;
 	}
 }

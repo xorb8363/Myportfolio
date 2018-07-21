@@ -27,4 +27,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM board ORDER BY b_reg_date DESC
 	</select>
 	
+	<select id="boardDetailForm" resultMap="boardListMap">
+		SELECT * FROM board
+		WHERE b_num = #{bNum}
+	</select>
+	
 </mapper>

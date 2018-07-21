@@ -27,4 +27,10 @@ public class BoardServiceImp implements BoardService {
 		return boardDao.boardList();
 	}
 
+	@Override
+	public BoardDto boardDetailForm(int bNum) {
+		// TODO Auto-generated method stub
+		return boardDao.boardDetailView(bNum);
+	}
+
 }
