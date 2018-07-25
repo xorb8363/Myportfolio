@@ -2,6 +2,7 @@
 2018/07/21 dto, dao, service, controller, jsp(게시판 메인만) 생성
 2018/07/22 쿼리 입력, 글 작성(jsp)과 게시판 전체보기 구현 (Create)
 2018/07/23 상세보기(jsp), 수정(jsp), 삭제 구현 (Read, Update, Remove)
+2018/07/24~ 면접ing
 
 (TODO LIST)
 댓글 구현
